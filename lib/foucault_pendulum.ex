@@ -15,8 +15,4 @@ defmodule FoucaultPendulum do
   def hello do
     :world
   end
-
-  def getLongitude do
-    10
-  end
 end

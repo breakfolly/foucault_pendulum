@@ -1,4 +1,4 @@
-# FoucaultPendulum
+# Foucault Pendulum
 
 **TODO: Add description**
 
