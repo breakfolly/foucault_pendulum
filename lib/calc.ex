@@ -16,7 +16,6 @@ defmodule Calc do
     # initial coord
     %{pi: pi, gravity: g, length: l} = init_values()
     2 * pi * pow(l/g, 0.5)
-#    |> Float.round(10)
   end
 
   # TODO: add dialyzer

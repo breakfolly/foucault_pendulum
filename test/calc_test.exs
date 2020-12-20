@@ -37,8 +37,17 @@ defmodule CalcTest do
     end
  
     test "1/2 period" do
+      p = Calc.get_period() / 2.0
+      %{x: x, y: y} = Calc.get_position(:inertial, 0, p)
+      assert %{x: 0.0, y: 0.0} == %{x: x |> Float.round(3), y: y |> Float.round(3)} 
     end
-
+    
+    test "3/4 period" do
+      p = Calc.get_period() * 3.0 / 4.0
+      %{x: x, y: y} = Calc.get_position(:inertial, 0, p)
+      assert %{x: -1.414, y: -1.414} == %{x: x |> Float.round(3), y: y |> Float.round(3)} 
+    end
+ 
     test "1 period" do
       p = Calc.get_period()
       %{x: x, y: y} = Calc.get_position(:inertial, 0, p)
