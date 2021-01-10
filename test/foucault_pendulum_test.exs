@@ -5,5 +5,4 @@ defmodule FoucaultPendulumTest do
   test "greets the world" do
     assert FoucaultPendulum.hello() == :world
   end
-
 end
