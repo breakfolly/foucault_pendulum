@@ -61,4 +61,9 @@ defmodule FoucaultPendulum.Calc do
     y = (-(x_i * sin(w * tp)) + y_i * cos(w * tp)) |> Float.round(4)
     %{x: x, y: y}
   end
+
+  def degree_to_radian(degree) do
+    %{pi: pi} = init_values()
+    degree * 2 * pi / 360 
+  end
 end

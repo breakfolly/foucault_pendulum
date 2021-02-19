@@ -1,39 +1,47 @@
 defmodule FoucaultPendulumWeb.PageLive do
   use FoucaultPendulumWeb, :live_view
 
+  alias FoucaultPendulum.Calc
+
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, query: "", results: %{})}
+    time = 0
+    degree = 90
+    radian = Calc.degree_to_radian(degree)
+
+    inertial_period = Calc.get_period()
+    period = Calc.get_period(radian)
+    %{x: x, y: y} = Calc.get_position(radian, time)
+
+    s =
+      socket
+      |> assign(:time, time)
+      |> assign(:degree, degree)
+      |> assign(:period, period)
+      |> assign(:inertial_period, inertial_period)
+      |> assign(:x, x)
+      |> assign(:y, y)
+
+    :timer.send_interval(1000, self(), :next_time)
+    {:ok, s}
   end
 
   @impl true
-  def handle_event("suggest", %{"q" => query}, socket) do
-    {:noreply, assign(socket, results: search(query), query: query)}
-  end
+  def handle_info(:next_time, socket) do
+    time = socket.assigns.time + 1000
+    degree = socket.assigns.degree
 
-  @impl true
-  def handle_event("search", %{"q" => query}, socket) do
-    case search(query) do
-      %{^query => vsn} ->
-        {:noreply, redirect(socket, external: "https://hexdocs.pm/#{query}/#{vsn}")}
+    %{x: x, y: y} =
+      Calc.degree_to_radian(degree)
+      |> Calc.get_position(time)
 
-      _ ->
-        {:noreply,
-         socket
-         |> put_flash(:error, "No dependencies found matching \"#{query}\"")
-         |> assign(results: %{}, query: query)}
-    end
-  end
+    s =
+      socket
+      |> assign(:time, time)
+      |> assign(:degree, degree)
+      |> assign(:x, x)
+      |> assign(:y, y)
 
-  defp search(query) do
-    if not FoucaultPendulumWeb.Endpoint.config(:code_reloader) do
-      raise "action disabled when not in development"
-    end
-
-    for {app, desc, vsn} <- Application.started_applications(),
-        app = to_string(app),
-        String.starts_with?(app, query) and not List.starts_with?(desc, ~c"ERTS"),
-        into: %{},
-        do: {app, vsn}
+    {:noreply, s}
   end
 end

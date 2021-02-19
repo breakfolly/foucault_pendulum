@@ -1,4 +1,38 @@
-<div>
-  here
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h1>Latitude</h1>
+      <div>
+        graph earth
+        
+      </div>
+      <div>
+        <form> 
+          <input type="number" value="<%= @degree %>" min="-90" max="90" />  &nbsp;
+          <button type="submit">Run </button>
+        </form>
+      </div>
+      <br />
+      <h1>Current</h1>
+      <div>
+        <ul>
+          <li>Time : <%= @time %> </li>
+          <li>Period :  <%= @period %> </li>
+          <li>Inertial Period:  <%= @inertial_period %> </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col">
+      <h1>Pantheon</h1>
+      <div id="pantheon_graph">
+      
+        <p>x : <%= @x %> </p>
+        <p>y : <%= @y %> </p>
+
+      </div>
+      <form> <button>3D </button> </form>
+      <p>Length: 67 m </p>
+    </div>
+  </div>
 </div>
 
