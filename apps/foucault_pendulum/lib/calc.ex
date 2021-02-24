@@ -1,6 +1,7 @@
 defmodule FoucaultPendulum.Calc do
   import Math
 
+  @spec init_values() :: map()
   defp init_values do
     %{
       pi: 3.14159,
@@ -11,25 +12,29 @@ defmodule FoucaultPendulum.Calc do
     }
   end
 
+  @spec get_period() :: float()
   def get_period() do
     # initial coord
     %{pi: pi, gravity: g, length: l} = init_values()
     2 * pi * pow(l / g, 0.5)
   end
 
-  # TODO: add dialyzer
+  @spec get_period(float()) :: atom()
   def get_period(0.0) do
     # at equator
     :infinity
   end
 
+  @spec get_period(float()) :: float()
   def get_period(latitude) do
     %{pi: pi, earth_angular_velocity: w} = init_values()
     2 * pi / (w * sin(latitude))
   end
 
+  @spec get_position(float(), float()) :: map()
   def get_position(l, t), do: get_position(:non_inertial, l, t)
 
+  @spec get_position(atom(), float(), float()) :: map()
   def get_position(:inertial, _latitude, t) do
     # Arbitrary Constants
     [a1, b1, a2, b2] = [1.0, 1.0, 1.0, 1.0]
@@ -62,6 +67,7 @@ defmodule FoucaultPendulum.Calc do
     %{x: x, y: y}
   end
 
+  @spec degree_to_radian(float()) :: float()
   def degree_to_radian(degree) do
     %{pi: pi} = init_values()
     degree * 2 * pi / 360 
