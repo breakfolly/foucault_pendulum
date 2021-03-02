@@ -19,13 +19,12 @@ defmodule FoucaultPendulum.Calc do
     2 * pi * pow(l / g, 0.5)
   end
 
-  @spec get_period(float()) :: atom()
+  @spec get_period(float()) :: atom() | float()
   def get_period(0.0) do
     # at equator
     :infinity
   end
 
-  @spec get_period(float()) :: float()
   def get_period(latitude) do
     %{pi: pi, earth_angular_velocity: w} = init_values()
     2 * pi / (w * sin(latitude))
@@ -65,11 +64,5 @@ defmodule FoucaultPendulum.Calc do
     x = (x_i * cos(w * tp) + y_i * sin(w * tp)) |> Float.round(4)
     y = (-(x_i * sin(w * tp)) + y_i * cos(w * tp)) |> Float.round(4)
     %{x: x, y: y}
-  end
-
-  @spec degree_to_radian(float()) :: float()
-  def degree_to_radian(degree) do
-    %{pi: pi} = init_values()
-    degree * 2 * pi / 360 
   end
 end
