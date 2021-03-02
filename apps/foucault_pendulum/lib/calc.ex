@@ -30,10 +30,10 @@ defmodule FoucaultPendulum.Calc do
     2 * pi / (w * sin(latitude))
   end
 
-  @spec get_position(float(), float()) :: map()
+  @spec get_position(float(), integer()) :: map()
   def get_position(l, t), do: get_position(:non_inertial, l, t)
 
-  @spec get_position(atom(), float(), float()) :: map()
+  @spec get_position(atom(), float(), integer()) :: map()
   def get_position(:inertial, _latitude, t) do
     # Arbitrary Constants
     [a1, b1, a2, b2] = [1.0, 1.0, 1.0, 1.0]

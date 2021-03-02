@@ -8,12 +8,12 @@ defmodule FoucaultPendulumWeb.PageLive do
     # from css
     earth_radius = 150
 
-    degree = 45
+    degree = 90
     radian = Math.deg2rad(degree)
     pole_width = (earth_radius * Math.cos(radian)) |> Float.ceil() |> max(3)
     pole_height = (earth_radius * Math.sin(radian)) |> Float.ceil() |> max(3)
 
-    time = 0.0
+    time = 0
     inertial_period = Calc.get_period()
     period = Calc.get_period(radian)
 
