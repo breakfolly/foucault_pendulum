@@ -3,8 +3,8 @@
     <div class="col">
       <h1>Latitude</h1>
       <div id="earth_graph" class="earth_graph">
-        <div id="earth" class="earth">
-          <div id="radius" class="radius" 
+        <div id="earth" class="earth" style="<%= if @radian < 0, do: "align-items: baseline;" %>">
+          <div id="radius" class="<%= if @radian < 0, do: "reverse" %> radius" 
             style="width:<%=@pole_width %>px; height:<%=@pole_height %>px;"></div>
         </div>
       </div>
