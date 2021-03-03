@@ -1,39 +1,80 @@
 defmodule FoucaultPendulumWeb.PageLive do
   use FoucaultPendulumWeb, :live_view
 
+  alias FoucaultPendulum.Calc
+
+  # from css
+  defp earth_radius(), do: 150
+
   @impl true
-  def mount(_params, _session, socket) do
-    {:ok, assign(socket, query: "", results: %{})}
+  def mount(params, _session, socket) do
+    degree = Map.get(params, "degree", "45") |> String.to_integer()
+    radian = Math.deg2rad(degree)
+    latitute = Map.merge(%{degree: degree, radian: radian}, degree2pole(degree))
+
+    time = 0
+    inertial_period = Calc.get_period()
+    period = Calc.get_period(radian)
+
+    %{x: x, y: y} = Calc.get_position(radian, time)
+
+    s =
+      assign_latitute(socket, latitute)
+
+      # Current Data
+      |> assign(:time, time)
+      |> assign(:period, period)
+      |> assign(:inertial_period, inertial_period)
+
+      # Pantheon Data
+      |> assign(:x, x)
+      |> assign(:y, y)
+
+    :timer.send_interval(1000, self(), :next_time)
+    {:ok, s}
   end
 
   @impl true
-  def handle_event("suggest", %{"q" => query}, socket) do
-    {:noreply, assign(socket, results: search(query), query: query)}
+  def handle_info(:next_time, socket) do
+    time = socket.assigns.time + 1000
+    degree = socket.assigns.degree
+
+    %{x: x, y: y} =
+      Math.deg2rad(degree)
+      |> Calc.get_position(time)
+
+    s =
+      socket
+      |> assign(:time, time)
+      |> assign(:degree, degree)
+      |> assign(:x, x)
+      |> assign(:y, y)
+
+    {:noreply, s}
   end
 
   @impl true
-  def handle_event("search", %{"q" => query}, socket) do
-    case search(query) do
-      %{^query => vsn} ->
-        {:noreply, redirect(socket, external: "https://hexdocs.pm/#{query}/#{vsn}")}
-
-      _ ->
-        {:noreply,
-         socket
-         |> put_flash(:error, "No dependencies found matching \"#{query}\"")
-         |> assign(results: %{}, query: query)}
-    end
+  def handle_event("new_degree", param, socket) do
+    degree = Map.get(param, "degree", "45") |> String.to_integer()
+    radian = Math.deg2rad(degree)
+    latitute = Map.merge(%{degree: degree, radian: radian}, degree2pole(degree))
+    {:noreply, assign_latitute(socket, latitute)}
   end
 
-  defp search(query) do
-    if not FoucaultPendulumWeb.Endpoint.config(:code_reloader) do
-      raise "action disabled when not in development"
-    end
+  defp degree2pole(degree) do
+    radian = Math.deg2rad(degree)
+    pole_width = (earth_radius * Math.cos(radian)) |> Float.ceil() |> max(3)
+    pole_height = (earth_radius * Math.sin(radian)) |> Float.ceil() |> abs() |> max(3)
+    %{pole_width: pole_width, pole_height: pole_height}
+  end
 
-    for {app, desc, vsn} <- Application.started_applications(),
-        app = to_string(app),
-        String.starts_with?(app, query) and not List.starts_with?(desc, ~c"ERTS"),
-        into: %{},
-        do: {app, vsn}
+  defp assign_latitute(socket, latitute) do
+    %{degree: degree, radian: radian, pole_width: pole_width, pole_height: pole_height} = latitute
+
+    socket
+    |> assign(:degree, degree)
+    |> assign(:radian, radian)
+    |> assign(:pole_width, pole_width)
+    |> assign(:pole_height, pole_height)
   end
 end

@@ -24,7 +24,9 @@ defmodule FoucaultPendulum.Umbrella.MixProject do
   # Dependencies listed here are available only for this project
   # and cannot be accessed from applications inside the apps/ folder.
   defp deps do
-    []
+    [
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false}
+    ]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

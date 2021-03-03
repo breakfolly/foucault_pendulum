@@ -1,48 +1,40 @@
-<section class="phx-hero">
-  <h1><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h1>
-  <p>Peace of mind from prototype to production</p>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h1>Latitude</h1>
+      <div id="earth_graph" class="earth_graph">
+        <div id="earth" class="earth" style="<%= if @radian < 0, do: "align-items: baseline;" %>">
+          <div id="radius" class="<%= if @radian < 0, do: "reverse" %> radius" 
+            style="width:<%=@pole_width %>px; height:<%=@pole_height %>px;"></div>
+        </div>
+      </div>
+      <div>
+        <form phx-change="new_degree"> 
+          <input type="number" name="degree" value="<%= @degree %>" min="-90" max="90" />  &nbsp;
+          <button type="submit">Run </button>
+        </form>
+      </div>
+      <br />
+      <h1>Current</h1>
+      <div>
+        <ul>
+          <li>Time : <%= @time %> </li>
+          <li>Period :  <%= @period %> </li>
+          <li>Inertial Period:  <%= @inertial_period %> </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col">
+      <h1>Pantheon</h1>
+      <div id="pantheon_graph">
+      
+        <p>x : <%= @x %> </p>
+        <p>y : <%= @y %> </p>
 
-  <form phx-change="suggest" phx-submit="search">
-    <input type="text" name="q" value="<%= @query %>" placeholder="Live dependency search" list="results" autocomplete="off"/>
-    <datalist id="results">
-      <%= for {app, _vsn} <- @results do %>
-        <option value="<%= app %>"><%= app %></option>
-      <% end %>
-    </datalist>
-    <button type="submit" phx-disable-with="Searching...">Go to Hexdocs</button>
-  </form>
-</section>
+      </div>
+      <form> <button>3D </button> </form>
+      <p>Length: 67 m </p>
+    </div>
+  </div>
+</div>
 
-<section class="row">
-  <article class="column">
-    <h2>Resources</h2>
-    <ul>
-      <li>
-        <a href="https://hexdocs.pm/phoenix/overview.html">Guides &amp; Docs</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix">Source</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix/blob/v1.5/CHANGELOG.md">v1.5 Changelog</a>
-      </li>
-    </ul>
-  </article>
-  <article class="column">
-    <h2>Help</h2>
-    <ul>
-      <li>
-        <a href="https://elixirforum.com/c/phoenix-forum">Forum</a>
-      </li>
-      <li>
-        <a href="https://webchat.freenode.net/?channels=elixir-lang">#elixir-lang on Freenode IRC</a>
-      </li>
-      <li>
-        <a href="https://twitter.com/elixirphoenix">Twitter @elixirphoenix</a>
-      </li>
-      <li>
-        <a href="https://elixir-slackin.herokuapp.com/">Elixir on Slack</a>
-      </li>
-    </ul>
-  </article>
-</section>

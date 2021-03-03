@@ -10,7 +10,8 @@ defmodule FoucaultPendulumWeb.Application do
       # Start the Telemetry supervisor
       FoucaultPendulumWeb.Telemetry,
       # Start the Endpoint (http/https)
-      FoucaultPendulumWeb.Endpoint
+      FoucaultPendulumWeb.Endpoint,
+      {Phoenix.PubSub, name: FoucaultPendulum.PubSub}
       # Start a worker by calling: FoucaultPendulumWeb.Worker.start_link(arg)
       # {FoucaultPendulumWeb.Worker, arg}
     ]
