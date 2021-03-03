@@ -7,11 +7,10 @@ defmodule FoucaultPendulumWeb.PageLive do
   defp earth_radius(), do: 150
 
   @impl true
-  def mount(_params, _session, socket) do
-    degree = 45
+  def mount(params, _session, socket) do
+    degree = Map.get(params, "degree", "45") |> String.to_integer()
     radian = Math.deg2rad(degree)
     latitute = Map.merge(%{degree: degree, radian: radian}, degree2pole(degree))
-    IO.inspect(latitute)
 
     time = 0
     inertial_period = Calc.get_period()
@@ -21,6 +20,7 @@ defmodule FoucaultPendulumWeb.PageLive do
 
     s =
       assign_latitute(socket, latitute)
+
       # Current Data
       |> assign(:time, time)
       |> assign(:period, period)
@@ -32,23 +32,6 @@ defmodule FoucaultPendulumWeb.PageLive do
 
     :timer.send_interval(1000, self(), :next_time)
     {:ok, s}
-  end
-
-  defp degree2pole(degree) do
-    radian = Math.deg2rad(degree)
-    pole_width = (earth_radius * Math.cos(radian)) |> Float.ceil() |> max(3)
-    pole_height = (earth_radius * Math.sin(radian)) |> Float.ceil() |> abs() |> max(3)
-    %{pole_width: pole_width, pole_height: pole_height}
-  end
-
-  defp assign_latitute(socket, latitute) do
-    %{degree: degree, radian: radian, pole_width: pole_width, pole_height: pole_height} = latitute
-
-    socket
-    |> assign(:degree, degree)
-    |> assign(:radian, radian)
-    |> assign(:pole_width, pole_width)
-    |> assign(:pole_height, pole_height)
   end
 
   @impl true
@@ -72,9 +55,26 @@ defmodule FoucaultPendulumWeb.PageLive do
 
   @impl true
   def handle_event("new_degree", param, socket) do
-    degree = Map.get(param, "degree")
+    degree = Map.get(param, "degree", "45") |> String.to_integer()
     radian = Math.deg2rad(degree)
     latitute = Map.merge(%{degree: degree, radian: radian}, degree2pole(degree))
     {:noreply, assign_latitute(socket, latitute)}
+  end
+
+  defp degree2pole(degree) do
+    radian = Math.deg2rad(degree)
+    pole_width = (earth_radius * Math.cos(radian)) |> Float.ceil() |> max(3)
+    pole_height = (earth_radius * Math.sin(radian)) |> Float.ceil() |> abs() |> max(3)
+    %{pole_width: pole_width, pole_height: pole_height}
+  end
+
+  defp assign_latitute(socket, latitute) do
+    %{degree: degree, radian: radian, pole_width: pole_width, pole_height: pole_height} = latitute
+
+    socket
+    |> assign(:degree, degree)
+    |> assign(:radian, radian)
+    |> assign(:pole_width, pole_width)
+    |> assign(:pole_height, pole_height)
   end
 end
