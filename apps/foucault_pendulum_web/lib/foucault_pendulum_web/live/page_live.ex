@@ -3,16 +3,16 @@ defmodule FoucaultPendulumWeb.PageLive do
 
   alias FoucaultPendulum.Calc
 
+  # from css
+  defp earth_radius(), do: 150
+
   @impl true
   def mount(_params, _session, socket) do
-    # from css
-    earth_radius = 150
-
     degree = 45
     radian = Math.deg2rad(degree)
-    pole_width = (earth_radius * Math.cos(radian)) |> Float.ceil() |> max(3)
-    pole_height = (earth_radius * Math.sin(radian)) |> Float.ceil() |> abs() |> max(3)
-    
+    latitute = Map.merge(%{degree: degree, radian: radian}, degree2pole(degree))
+    IO.inspect(latitute)
+
     time = 0
     inertial_period = Calc.get_period()
     period = Calc.get_period(radian)
@@ -20,22 +20,35 @@ defmodule FoucaultPendulumWeb.PageLive do
     %{x: x, y: y} = Calc.get_position(radian, time)
 
     s =
-      socket
-      # Latitude Data
-      |> assign(:degree, degree)
-      |> assign(:radian, radian)
-      |> assign(:pole_width, pole_width)
-      |> assign(:pole_height, pole_height)
+      assign_latitute(socket, latitute)
       # Current Data
       |> assign(:time, time)
       |> assign(:period, period)
       |> assign(:inertial_period, inertial_period)
+
       # Pantheon Data
       |> assign(:x, x)
       |> assign(:y, y)
 
     :timer.send_interval(1000, self(), :next_time)
     {:ok, s}
+  end
+
+  defp degree2pole(degree) do
+    radian = Math.deg2rad(degree)
+    pole_width = (earth_radius * Math.cos(radian)) |> Float.ceil() |> max(3)
+    pole_height = (earth_radius * Math.sin(radian)) |> Float.ceil() |> abs() |> max(3)
+    %{pole_width: pole_width, pole_height: pole_height}
+  end
+
+  defp assign_latitute(socket, latitute) do
+    %{degree: degree, radian: radian, pole_width: pole_width, pole_height: pole_height} = latitute
+
+    socket
+    |> assign(:degree, degree)
+    |> assign(:radian, radian)
+    |> assign(:pole_width, pole_width)
+    |> assign(:pole_height, pole_height)
   end
 
   @impl true
@@ -55,5 +68,13 @@ defmodule FoucaultPendulumWeb.PageLive do
       |> assign(:y, y)
 
     {:noreply, s}
+  end
+
+  @impl true
+  def handle_event("new_degree", param, socket) do
+    degree = Map.get(param, "degree")
+    radian = Math.deg2rad(degree)
+    latitute = Map.merge(%{degree: degree, radian: radian}, degree2pole(degree))
+    {:noreply, assign_latitute(socket, latitute)}
   end
 end

@@ -9,9 +9,9 @@
         </div>
       </div>
       <div>
-        <form> 
-          <input type="number" value="<%= @degree %>" min="-90" max="90" />  &nbsp;
-          <button type="submit">Run </button>
+        <form phx-change="new_degree"> 
+          <input type="number" name="degree" value="<%= @degree %>" min="-90" max="90" />  &nbsp;
+          <button type="button">Run </button>
         </form>
       </div>
       <br />
