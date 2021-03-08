@@ -26,12 +26,17 @@
     </div>
     <div class="col">
       <h1>Pantheon</h1>
-      <div id="pantheon_graph">
-      
-        <p>x : <%= @x %> </p>
-        <p>y : <%= @y %> </p>
-
+      <div id="pantheon_graph" class="pantheon_graph" phx-update="ignore">
+        <canvas id="pantheon2d" 
+          class="pantheon2d" 
+          phx-hook="pantheon2d"
+          width="450"
+          height="450"
+        </canvas>
       </div>
+      <p id="pantheon_xy" class="pantheon_xy" phx-hook="updatePantheon2d" data-pantheon2d=<%= raw @xy %> </p>
+      <p>x : <%= @x %> </p>
+      <p>y : <%= @y %> </p>
       <form> <button>3D </button> </form>
       <p>Length: 67 m </p>
     </div>

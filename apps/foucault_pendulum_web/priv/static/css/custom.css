@@ -37,16 +37,10 @@
 }
 
 .pantheon_graph {
-/*  background: #ccccff;   */
-  width: 100%; 
-  height: 400px; 
+  width: 500px; 
+  height: 500px; 
 }
 
-/*
-.pantheon2d {
-  width: 100% !important;
-  max-width: 800px;
-  height: auto !important;
+.pantheon_xy {
+  display: none;
 }
- */
-

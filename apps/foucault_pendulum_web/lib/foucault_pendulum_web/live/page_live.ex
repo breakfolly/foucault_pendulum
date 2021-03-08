@@ -17,6 +17,7 @@ defmodule FoucaultPendulumWeb.PageLive do
     period = Calc.get_period(radian)
 
     %{x: x, y: y} = Calc.get_position(radian, time)
+    pantheon2d = Poison.encode!([Calc.get_position(radian, time)])
 
     s =
       assign_latitute(socket, latitute)
@@ -29,6 +30,8 @@ defmodule FoucaultPendulumWeb.PageLive do
       # Pantheon Data
       |> assign(:x, x)
       |> assign(:y, y)
+      |> assign(:xy, Poison.encode!(%{x: x, y: y}))
+      |> assign(:pantheon2d, pantheon2d)
 
     :timer.send_interval(1000, self(), :next_time)
     {:ok, s}
@@ -36,8 +39,12 @@ defmodule FoucaultPendulumWeb.PageLive do
 
   @impl true
   def handle_info(:next_time, socket) do
-    time = socket.assigns.time + 1000
+    time = socket.assigns.time + 100
     degree = socket.assigns.degree
+
+    p =
+      (socket.assigns.pantheon2d |> Poison.decode!()) ++
+        [Math.deg2rad(degree) |> Calc.get_position(time)]
 
     %{x: x, y: y} =
       Math.deg2rad(degree)
@@ -49,6 +56,8 @@ defmodule FoucaultPendulumWeb.PageLive do
       |> assign(:degree, degree)
       |> assign(:x, x)
       |> assign(:y, y)
+      |> assign(:xy, Poison.encode!(%{x: x, y: y}))
+      |> assign(:pantheon2d, Poison.encode!(p))
 
     {:noreply, s}
   end
