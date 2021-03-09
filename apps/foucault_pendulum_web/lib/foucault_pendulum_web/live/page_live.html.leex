@@ -1,31 +1,74 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <h1>Latitude</h1>
+      <h2 class="title2">Latitude</h2>
       <div id="earth_graph" class="earth_graph">
         <div id="earth" class="earth" style="<%= if @radian < 0, do: "align-items: baseline;" %>">
           <div id="radius" class="<%= if @radian < 0, do: "reverse" %> radius" 
             style="width:<%=@pole_width %>px; height:<%=@pole_height %>px;"></div>
         </div>
       </div>
-      <div>
-        <form phx-change="new_degree"> 
-          <input type="number" name="degree" value="<%= @degree %>" min="-90" max="90" />  &nbsp;
-          <button type="submit">Run </button>
+      <div class="text-end">
+        <form phx-change="new_degree" class="description"> 
+          degree
+          <input type="number" name="degree" value="<%= @degree %>" min="-90" max="90" /> º &nbsp;
+          <button type="submit"class="btn btn-secondary">Run </button>
         </form>
       </div>
       <br />
-      <h1>Current</h1>
+      <h2 class="title2">Current</h2>
       <div>
-        <ul>
-          <li>Time : <%= @time %> </li>
-          <li>Period :  <%= @period %> </li>
-          <li>Inertial Period:  <%= @inertial_period %> </li>
+        <ul class="description">
+          <li>
+            Time : <%= @time %> s
+            <div class="accordion accordion-flush" id="accrd_time">
+              <div class="accordion-item" phx-update="ignore">
+                <h2 class="accordion-header" id="flush-headingOne">
+                  <button class="accordion-button collapsed accrd_head" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    Is this real time?
+                  </button>
+                </h2>
+                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accrd_time">
+                  <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            Period : <%= @period %> <%= if @period != :infinity, do: "s" %>     
+            <div class="accordion accordion-flush" id="accrd_period">
+              <div class="accordion-item" phx-update="ignore">
+                <h2 class="accordion-header" id="flush-headingTwo">
+                  <button class="accordion-button collapsed accrd_head" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                    How to calculate this value?
+                  </button>
+                </h2>
+                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accrd_period">
+                  <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            Inertial Period : <%= @inertial_period %> <%= if @period != :infinity, do: "s" %> 
+            <div class="accordion accordion-flush" id="accrd_inertial_period">
+              <div class="accordion-item" phx-update="ignore">
+                <h2 class="accordion-header" id="flush-headingThree">
+                  <button class="accordion-button collapsed accrd_head" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                    How to calculate this value?
+                  </button>
+                </h2>
+                <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accrd_inertial_period">
+                  <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+                </div>
+              </div>
+            </div> 
+          </li>
         </ul>
       </div>
     </div>
     <div class="col">
-      <h1>Pantheon</h1>
+      <h2 class="title2">Pantheon</h2>
       <div id="pantheon_graph" class="pantheon_graph" phx-update="ignore">
         <canvas id="pantheon2d" 
           class="pantheon2d" 
@@ -35,10 +78,23 @@
         </canvas>
       </div>
       <p id="pantheon_xy" class="pantheon_xy" phx-hook="updatePantheon2d" data-pantheon2d=<%= raw @xy %> </p>
-      <p>x : <%= @x %> </p>
-      <p>y : <%= @y %> </p>
-      <form> <button>3D </button> </form>
-      <p>Length: 67 m </p>
+      <p class="description">x : <%= @x %> </p>
+      <p class="description">y : <%= @y %> </p>
+      <form style="display: none"> <button>3D </button> </form>
+      <p class="description">Length of Pendulum: 67 m </p>
+        <div class="accordion accordion-flush" id="accrd_pantheon">
+          <div class="accordion-item" phx-update="ignore">
+            <h2 class="accordion-header" id="flush-headingFour">
+              <button class="accordion-button collapsed accrd_head" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                What is this graph?
+              </button>
+            </h2>
+            <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accrd_pantheon">
+              <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+            </div>
+          </div>
+        </div> 
+
     </div>
   </div>
 </div>
