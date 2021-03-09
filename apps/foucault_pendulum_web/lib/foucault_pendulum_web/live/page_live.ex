@@ -72,8 +72,8 @@ defmodule FoucaultPendulumWeb.PageLive do
 
   defp degree2pole(degree) do
     radian = Math.deg2rad(degree)
-    pole_width = (earth_radius * Math.cos(radian)) |> Float.ceil() |> max(3)
-    pole_height = (earth_radius * Math.sin(radian)) |> Float.ceil() |> abs() |> max(3)
+    pole_width = (earth_radius() * Math.cos(radian)) |> Float.ceil() |> max(3)
+    pole_height = (earth_radius() * Math.sin(radian)) |> Float.ceil() |> abs() |> max(3)
     %{pole_width: pole_width, pole_height: pole_height}
   end
 
