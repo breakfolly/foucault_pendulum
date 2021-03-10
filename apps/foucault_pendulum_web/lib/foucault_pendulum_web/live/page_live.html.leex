@@ -1,31 +1,81 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <h1>Latitude</h1>
+      <h2 class="title2">Latitude</h2>
       <div id="earth_graph" class="earth_graph">
         <div id="earth" class="earth" style="<%= if @radian < 0, do: "align-items: baseline;" %>">
           <div id="radius" class="<%= if @radian < 0, do: "reverse" %> radius" 
             style="width:<%=@pole_width %>px; height:<%=@pole_height %>px;"></div>
         </div>
       </div>
-      <div>
-        <form phx-change="new_degree"> 
-          <input type="number" name="degree" value="<%= @degree %>" min="-90" max="90" />  &nbsp;
-          <button type="submit">Run </button>
+      <div class="text-end">
+        <form phx-change="new_degree" class="description"> 
+          degree
+          <input type="number" name="degree" value="<%= @degree %>" min="-90" max="90" /> º &nbsp;
+          <button type="submit"class="btn btn-secondary">Run </button>
         </form>
       </div>
       <br />
-      <h1>Current</h1>
+      <h2 class="title2">Current</h2>
       <div>
-        <ul>
-          <li>Time : <%= @time %> </li>
-          <li>Period :  <%= @period %> </li>
-          <li>Inertial Period:  <%= @inertial_period %> </li>
+        <ul class="description">
+          <li>
+            Time : <%= @time %> s
+            <div class="accordion accordion-flush" id="accrd_time">
+              <div class="accordion-item" phx-update="ignore" id="accrd_time_item">
+                <h2 class="accordion-header" id="flush-headingOne">
+                  <button class="accordion-button collapsed accrd_head" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    Is this real time?
+                  </button>
+                </h2>
+                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accrd_time">
+                  <div class="accordion-body">
+                     No. This time is virtual to show the pantheon graph effectively. You can compare the time and period, and realize the pendulum's movement. If the time is equal to the period, the pendulum would rotate one cycle.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            Period : <%= @period %> <%= if @period != :infinity, do: "s" %>     
+            <div class="accordion accordion-flush" id="accrd_period">
+              <div class="accordion-item" phx-update="ignore" id="accrd_period_item">
+                <h2 class="accordion-header" id="flush-headingTwo">
+                  <button class="accordion-button collapsed accrd_head" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                    How is this value calculated?
+                  </button>
+                </h2>
+                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accrd_period">
+                  <div class="accordion-body">
+                    This value represents how long the pendulum rotates through one cycle. The period differs in latitude. In general, when something rotate at an angular velocity of ⍵, the period would be $$ 2 \pi \over \omega $$ The angular velocity is Earth's angular velocity. If the Pantheon is at 45º latitude, the angular velocity would be $$ {2\pi \over \omega\sin 45º} $$ However, at the equator, this value is infinity because the sin 0º is zero. 
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            Inertial Period : <%= @inertial_period %> <%= if @period != :infinity, do: "s" %> 
+            <div class="accordion accordion-flush" id="accrd_inertial_period">
+              <div class="accordion-item" phx-update="ignore" id="accrd_inertial_period_item">
+                <h2 class="accordion-header" id="flush-headingThree">
+                  <button class="accordion-button collapsed accrd_head" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                    How is this value calculated?
+                  </button>
+                </h2>
+                <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accrd_inertial_period">
+                  <div class="accordion-body">
+                    This period is calculated using an inertia coordinate system. The pendulum rotates, but also swings. The period of swing movement depends on gravity and the length of the pendulum, as follows:
+                    $$ 2 \pi \sqrt{l \over g} $$ 
+                  </div>
+                </div>
+              </div>
+            </div> 
+          </li>
         </ul>
       </div>
     </div>
     <div class="col">
-      <h1>Pantheon</h1>
+      <h2 class="title2">Pantheon</h2>
       <div id="pantheon_graph" class="pantheon_graph" phx-update="ignore">
         <canvas id="pantheon2d" 
           class="pantheon2d" 
@@ -35,10 +85,24 @@
         </canvas>
       </div>
       <p id="pantheon_xy" class="pantheon_xy" phx-hook="updatePantheon2d" data-pantheon2d=<%= raw @xy %> </p>
-      <p>x : <%= @x %> </p>
-      <p>y : <%= @y %> </p>
-      <form> <button>3D </button> </form>
-      <p>Length: 67 m </p>
+      <p class="description">x : <%= @x %> </p>
+      <p class="description">y : <%= @y %> </p>
+      <form style="display: none"> <button>3D </button> </form>
+      <p class="description">Length of Pendulum: 67 m </p>
+        <div class="accordion accordion-flush description" id="accrd_pantheon">
+          <div class="accordion-item" phx-update="ignore" id="accrd_pantheon_item">
+            <h2 class="accordion-header" id="flush-headingFour">
+              <button class="accordion-button collapsed accrd_head" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
+                What is this graph?
+              </button>
+            </h2>
+            <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accrd_pantheon">
+              <div class="accordion-body">
+                This graph is a projection of the pendulum on the Pantheon's floor. If the pendulum did not rotate, the projection would be just a straight line. However, the pendulum rotates, and the line on the projection rotates. There is one exception. When the pendulum is on the equator, it does not rotate because there is no Coriolis Force.
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
   </div>
 </div>

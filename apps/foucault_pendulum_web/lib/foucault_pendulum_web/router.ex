@@ -37,7 +37,7 @@ defmodule FoucaultPendulumWeb.Router do
 
     scope "/" do
       pipe_through :browser
-      live_dashboard "/dashboard", metrics: FoucaultPendulumWeb.Telemetry
+      live_dashboard "/_dashboard", metrics: FoucaultPendulumWeb.Telemetry
     end
   end
 end

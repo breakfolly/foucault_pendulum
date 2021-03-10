@@ -24,9 +24,10 @@ const drawPantheon2d = (ctx) => {
         datasets: [{
           fill: false,
           data: [],
-		  borderColor: 'black',
+		  borderColor: '#9CBCCE',
 		  borderWidth: 1,
-		  pointRadius: 3,
+		  pointRadius: 2,
+	      pointBackgroundColor: 'rgb(156, 188, 206)',
 		  showLine: true
        
         }]

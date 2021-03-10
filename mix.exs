@@ -7,7 +7,12 @@ defmodule FoucaultPendulum.Umbrella.MixProject do
       version: "0.1.0",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      aliases: aliases()
+      aliases: aliases(),
+      releases: [
+        prod: [
+          applications: [foucault_pendulum_web: :permanent]
+        ]
+      ]
     ]
   end
 

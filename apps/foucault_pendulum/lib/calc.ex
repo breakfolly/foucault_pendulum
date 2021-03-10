@@ -28,6 +28,7 @@ defmodule FoucaultPendulum.Calc do
   def get_period(latitude) do
     %{pi: pi, earth_angular_velocity: w} = init_values()
     2 * pi / (w * sin(latitude))
+    |> abs()
   end
 
   @spec get_position(float(), integer()) :: map()
