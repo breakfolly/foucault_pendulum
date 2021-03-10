@@ -18,11 +18,11 @@ defmodule FoucaultPendulum.CalcTest do
     end
 
     test "at southern hemisphere" do
-      assert -121_854.40258329792 == Calc.get_period(-(pi() / 4.0))
+      assert 121_854.40258329792 == Calc.get_period(-(pi() / 4.0))
     end
 
     test "at south pole" do
-      assert -86164.01722311531 == Calc.get_period(-(pi() / 2.0))
+      assert 86164.01722311531 == Calc.get_period(-(pi() / 2.0))
     end
   end
 
