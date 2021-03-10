@@ -22,7 +22,7 @@
           <li>
             Time : <%= @time %> s
             <div class="accordion accordion-flush" id="accrd_time">
-              <div class="accordion-item" phx-update="ignore">
+              <div class="accordion-item" phx-update="ignore" id="accrd_time_item">
                 <h2 class="accordion-header" id="flush-headingOne">
                   <button class="accordion-button collapsed accrd_head" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
                     Is this real time?
@@ -39,7 +39,7 @@
           <li>
             Period : <%= @period %> <%= if @period != :infinity, do: "s" %>     
             <div class="accordion accordion-flush" id="accrd_period">
-              <div class="accordion-item" phx-update="ignore">
+              <div class="accordion-item" phx-update="ignore" id="accrd_period_item">
                 <h2 class="accordion-header" id="flush-headingTwo">
                   <button class="accordion-button collapsed accrd_head" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
                     How is this value calculated?
@@ -56,7 +56,7 @@
           <li>
             Inertial Period : <%= @inertial_period %> <%= if @period != :infinity, do: "s" %> 
             <div class="accordion accordion-flush" id="accrd_inertial_period">
-              <div class="accordion-item" phx-update="ignore">
+              <div class="accordion-item" phx-update="ignore" id="accrd_inertial_period_item">
                 <h2 class="accordion-header" id="flush-headingThree">
                   <button class="accordion-button collapsed accrd_head" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
                     How is this value calculated?

@@ -4,7 +4,7 @@ defmodule FoucaultPendulumWeb.PageLiveTest do
   import Phoenix.LiveViewTest
 
   test "disconnected and connected render", %{conn: conn} do
-    {:ok, page_live, disconnected_html} = live(conn, "/")
+    {:ok, _page_live, _disconnected_html} = live(conn, "/")
 
     # TODO : add test html loading
     #    assert disconnected_html =~ "Welcome to Phoenix!"
