@@ -14,6 +14,8 @@
     <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(@conn, "/js/popper.min.js") %>"></script>
     <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(@conn, "/js/bootstrap.min.js") %>"></script>
     <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(@conn, "/js/chart.min.js") %>"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   </head>
   <body>
     <div>
@@ -22,7 +24,9 @@
    <!--       <img src="<%= Routes.static_path(@conn, "/images/phoenix.png") %>" alt="Phoenix Framework Logo"/>
    -->  
         <h1 class="title">Foucault Pendulum </h1>
-        <p class="description"> <a href="https://en.wikipedia.org/wiki/Foucault_pendulum"> Foucault Pendulum</a> is in the Pantheon, Paris. </p>
+        <p class="description"> <a href="https://en.wikipedia.org/wiki/Foucault_pendulum" target="_blank"> Foucault Pendulum</a> is in the Pantheon, Paris. <br />
+          French physicist Leon Foucault conceived the experiment which is known as "Foucault Pendulum". This experiment shows Earth's rotation. It consists of a 67-meter wire and a 28-kilogram bob. The pendulum did not just swing in a single direction. It rotated clockwise in Paris. If Earth does not rotate, the pendulum has no reason for rotation. However, we can get evidence of Earth's rotation because the pendulum rotated.
+        </p>
        </a>
       </div>
     </div>

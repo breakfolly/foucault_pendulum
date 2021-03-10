@@ -29,7 +29,9 @@
                   </button>
                 </h2>
                 <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accrd_time">
-                  <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+                  <div class="accordion-body">
+                     No. This time is virtual to show the pantheon graph effectively. You can compare the time and period, and realize the pendulum's movement. If the time is equal to the period, the pendulum would rotate one cycle.
+                  </div>
                 </div>
               </div>
             </div>
@@ -40,11 +42,13 @@
               <div class="accordion-item" phx-update="ignore">
                 <h2 class="accordion-header" id="flush-headingTwo">
                   <button class="accordion-button collapsed accrd_head" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-                    How to calculate this value?
+                    How is this value calculated?
                   </button>
                 </h2>
                 <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accrd_period">
-                  <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+                  <div class="accordion-body">
+                    This value represents how long the pendulum rotates through one cycle. The period differs in latitude. In general, when something rotate at an angular velocity of ⍵, the period would be $$ 2 \pi \over \omega $$ The angular velocity is Earth's angular velocity. If the Pantheon is at 45º latitude, the angular velocity would be $$ {2\pi \over \omega\sin 45º} $$ However, at the equator, this value is infinity because the sin 0º is zero. 
+                  </div>
                 </div>
               </div>
             </div>
@@ -55,11 +59,14 @@
               <div class="accordion-item" phx-update="ignore">
                 <h2 class="accordion-header" id="flush-headingThree">
                   <button class="accordion-button collapsed accrd_head" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                    How to calculate this value?
+                    How is this value calculated?
                   </button>
                 </h2>
                 <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accrd_inertial_period">
-                  <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+                  <div class="accordion-body">
+                    This period is calculated using an inertia coordinate system. The pendulum rotates, but also swings. The period of swing movement depends on gravity and the length of the pendulum, as follows:
+                    $$ 2 \pi \sqrt{l \over g} $$ 
+                  </div>
                 </div>
               </div>
             </div> 
@@ -82,7 +89,7 @@
       <p class="description">y : <%= @y %> </p>
       <form style="display: none"> <button>3D </button> </form>
       <p class="description">Length of Pendulum: 67 m </p>
-        <div class="accordion accordion-flush" id="accrd_pantheon">
+        <div class="accordion accordion-flush description" id="accrd_pantheon">
           <div class="accordion-item" phx-update="ignore">
             <h2 class="accordion-header" id="flush-headingFour">
               <button class="accordion-button collapsed accrd_head" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
@@ -90,11 +97,12 @@
               </button>
             </h2>
             <div id="flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-headingFour" data-bs-parent="#accrd_pantheon">
-              <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+              <div class="accordion-body">
+                This graph is a projection of the pendulum on the Pantheon's floor. If the pendulum did not rotate, the projection would be just a straight line. However, the pendulum rotates, and the line on the projection rotates. There is one exception. When the pendulum is on the equator, it does not rotate because there is no Coriolis Force.
+              </div>
             </div>
           </div>
-        </div> 
-
+        </div>
     </div>
   </div>
 </div>
