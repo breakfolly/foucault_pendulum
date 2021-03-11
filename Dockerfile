@@ -1,5 +1,9 @@
 FROM elixir:1.11.3-alpine AS build
 
+RUN apk update && apk add python3-dev \
+                        gcc \
+                        libc-dev
+
 # install build dependencies
 RUN apk add --no-cache build-base npm git python
 
