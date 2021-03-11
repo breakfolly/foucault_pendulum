@@ -25,6 +25,7 @@ ENV SECRET_KEY_BASE=$SECRET_KEY_BASE
 #COPY mix.exs mix.lock ./
 COPY mix.exs ./
 COPY config config
+RUN rm ./.hex/cache.ets
 RUN mix do deps.get, deps.compile
 
 # build assets
