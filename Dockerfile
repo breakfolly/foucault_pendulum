@@ -22,7 +22,8 @@ ENV MIX_ENV=prod
 ENV SECRET_KEY_BASE=$SECRET_KEY_BASE
 
 # install mix dependencies
-COPY mix.exs mix.lock ./
+#COPY mix.exs mix.lock ./
+COPY mix.exs ./
 COPY config config
 RUN mix do deps.get, deps.compile
 
