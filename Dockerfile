@@ -13,7 +13,7 @@ WORKDIR /app
 # install hex + rebar
 RUN mix local.hex --force 
 
-RUN mix hex.config cdn_url https://s3-ap-southeast-1.amazonaws.com/s3-asia.hex.pm
+RUN mix hex.config mirror_url https://s3-ap-southeast-1.amazonaws.com/s3-asia.hex.pm
 
 RUN mix local.rebar --force
 
