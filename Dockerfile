@@ -5,7 +5,7 @@ RUN apk update && apk add python3-dev \
                         libc-dev
 
 # install build dependencies
-RUN apk add --no-cache build-base npm git python
+RUN apk add --no-cache build-base npm git
 
 # prepare build dir
 WORKDIR /app
