@@ -10,6 +10,7 @@ RUN apk add --no-cache build-base npm git
 # prepare build dir
 WORKDIR /app
 
+RUN mix hex.config cdn_url https://s3-ap-southeast-1.amazonaws.com/s3-asia.hex.pm
 # install hex + rebar
 RUN mix local.hex --force && \
     mix local.rebar --force
