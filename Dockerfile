@@ -22,10 +22,8 @@ ENV MIX_ENV=prod
 ENV SECRET_KEY_BASE=$SECRET_KEY_BASE
 
 # install mix dependencies
-#COPY mix.exs mix.lock ./
-COPY mix.exs ./
+COPY mix.exs mix.lock ./
 COPY config config
-RUN rm ~/.hex/cache.ets
 RUN mix do deps.get, deps.compile
 
 # build assets
