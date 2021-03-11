@@ -24,7 +24,9 @@ ENV SECRET_KEY_BASE=$SECRET_KEY_BASE
 # install mix dependencies
 COPY mix.exs mix.lock ./
 COPY config config
-RUN mix do deps.get, deps.compile
+# RUN mix do deps.get, deps.compile
+RUN mix deps.get
+RUN mix deps.compile
 
 # build assets
 COPY assets/package.json assets/package-lock.json ./assets/
