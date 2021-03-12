@@ -53,8 +53,9 @@ jobs:
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
       env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: 051728413720.dkr.ecr.ap-northeast-2.amazonaws.com/foucault_pendulum
+       # ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REGISTRY: 051728413720.dkr.ecr.ap-northeast-2.amazonaws.com
+        ECR_REPOSITORY: foucault_pendulum
         IMAGE_TAG: ${{ github.sha }}
         SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
       run: |
