@@ -67,4 +67,4 @@ COPY --from=build --chown=nobody:nobody /app/_build/prod/rel/prod ./
 
 ENV HOME=/app
 
-CMD ["bin/foucault_pendulum", "start"]
+CMD ["bin/prod", "start"]
