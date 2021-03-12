@@ -65,12 +65,16 @@ jobs:
         docker build --build-arg SECRET_KEY_BASE=$SECRET_KEY_BASE -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+        
+    - name: Download task definition
+      run: |
+        aws ecs describe-task-definition --task-definition my-task-definition-family --query taskDefinition > task-definition.json
 
     - name: Fill in the new image ID in the Amazon ECS task definition
       id: task-def
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
-        task-definition: faucault_pendulum.json
+        task-definition: task-definition.json
         container-name: faucault_pendulum
         image: ${{ steps.build-image.outputs.image }}
 
