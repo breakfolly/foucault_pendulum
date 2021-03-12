@@ -8,13 +8,11 @@ RUN apk update && apk add python3-dev \
 RUN apk add --no-cache build-base npm git
 
 # prepare build dir
+RUN mkdir /app
 WORKDIR /app
 
 # install hex + rebar
 RUN mix local.hex --force 
-
-RUN mix hex.config mirror_url https://s3-ap-southeast-1.amazonaws.com/s3-asia.hex.pm
-
 RUN mix local.rebar --force
 
 # set build ENV
@@ -23,22 +21,34 @@ ENV SECRET_KEY_BASE=$SECRET_KEY_BASE
 
 # install mix dependencies
 COPY mix.exs mix.lock ./
+COPY apps/foucault_pendulum/mix.exs apps/foucault_pendulum/mix.exs
+COPY apps/foucault_pendulum_web/mix.exs apps/foucault_pendulum_web/mix.exs
+
 COPY config config
-# RUN mix do deps.get, deps.compile
-RUN mix deps.get
-RUN mix deps.compile
+RUN mix do deps.get, deps.compile
+#RUN mix deps.get
+#RUN mix deps.compile
 
 # build assets
-COPY assets/package.json assets/package-lock.json ./assets/
-RUN npm --prefix ./assets ci --progress=false --no-audit --loglevel=error
+COPY apps/foucault_pendulum_web/assets/package.json apps/foucault_pendulum_web/assets/package-lock.json ./apps/foucault_pendulum_web/assets/
+WORKDIR ./deps/phoenix
+RUN npm link 
+ 
+WORKDIR /app
+RUN cd apps/foucault_pendulum_web/assets && npm link phoenix
 
-COPY priv priv
-COPY assets assets
-RUN npm run --prefix ./assets deploy
-RUN mix phx.digest
+RUN npm --prefix ./apps/foucault_pendulum_web/assets ci --progress=false --no-audit --loglevel=error
+
+# COPY umbrella projects 
+COPY apps/foucault_pendulum_web/priv apps/foucault_pendulum_web/priv
+COPY apps/foucault_pendulum_web/assets apps/foucault_pendulum_web/assets
+RUN npm run --prefix apps/foucault_pendulum_web/assets deploy
+RUN cd apps/foucault_pendulum_web mix phx.digest
 
 # compile and build release
-COPY lib lib
+COPY apps/foucault_pendulum/lib apps/foucault_pendulum/lib
+COPY apps/foucault_pendulum_web/lib apps/foucault_pendulum_web/lib
+
 # uncomment COPY if rel/ exists
 # COPY rel rel
 RUN mix do compile, release
@@ -53,7 +63,7 @@ RUN chown nobody:nobody /app
 
 USER nobody:nobody
 
-COPY --from=build --chown=nobody:nobody /app/_build/prod/rel/foucault_pendulum ./
+COPY --from=build --chown=nobody:nobody /app/_build/prod/rel/prod ./
 
 ENV HOME=/app
 
