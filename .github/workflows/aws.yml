@@ -53,8 +53,9 @@ jobs:
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
       env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: 051728413720.dkr.ecr.ap-northeast-2.amazonaws.com/foucault_pendulum
+       # ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REGISTRY: 051728413720.dkr.ecr.ap-northeast-2.amazonaws.com
+        ECR_REPOSITORY: foucault_pendulum
         IMAGE_TAG: ${{ github.sha }}
         SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
       run: |
@@ -64,19 +65,23 @@ jobs:
         docker build --build-arg SECRET_KEY_BASE=$SECRET_KEY_BASE -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+        
+    - name: Download task definition
+      run: |
+        aws ecs describe-task-definition --task-definition foucault_pendulum:2 --query taskDefinition > task-definition.json
 
     - name: Fill in the new image ID in the Amazon ECS task definition
       id: task-def
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
-        task-definition: faucault_pendulum.json
-        container-name: faucault-pendulum
+        task-definition: task-definition.json
+        container-name: foucault_pendulum
         image: ${{ steps.build-image.outputs.image }}
 
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
-        service: faucault-pendulum-service
-        cluster: default
+        service: foucault-pendulum-service
+        cluster: foucault-pendulum
         wait-for-service-stability: true
