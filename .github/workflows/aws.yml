@@ -70,8 +70,8 @@ jobs:
       id: task-def
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
-        task-definition: faucault_pendulum
-        container-name: faucault-pendulum
+        task-definition: faucault_pendulum.json
+        container-name: faucault_pendulum
         image: ${{ steps.build-image.outputs.image }}
 
     - name: Deploy Amazon ECS task definition
