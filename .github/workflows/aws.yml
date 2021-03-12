@@ -83,5 +83,5 @@ jobs:
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
         service: faucault-pendulum-service
-        cluster: default
+        cluster: foucault-pendulum
         wait-for-service-stability: true
