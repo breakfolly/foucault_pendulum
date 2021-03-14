@@ -94,9 +94,6 @@ defmodule FoucaultPendulumWeb.PageLive do
     socket
     |> assign(:time, time)
     |> assign(:period, if(period == :infinity, do: period, else: Float.round(period, 3)))
-    |> assign(
-      :inertial_period,
-      if(inertial_period == :infinity, do: inertial_period, else: Float.round(inertial_period, 3))
-    )
+    |> assign(:inertial_period, Float.round(inertial_period, 3))
   end
 end
