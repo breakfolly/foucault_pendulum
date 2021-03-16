@@ -10,7 +10,7 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :foucault_pendulum_web, FoucaultPendulumWeb.Endpoint,
-  url: [host: "breakfolly.com", port: 80],
+  url: [host: "pf.breakfolly.com", port: 80],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # ## SSL Support
@@ -18,7 +18,7 @@ config :foucault_pendulum_web, FoucaultPendulumWeb.Endpoint,
 # To get SSL working, you will need to add the `https` key
 # to the previous section and set your `:url` port to 443:
 #
-#config :foucault_pendulum_web, FoucaultPendulumWeb.Endpoint,
+# config :foucault_pendulum_web, FoucaultPendulumWeb.Endpoint,
 #  url: [host: "breakfolly.com", port: 443],
 #  https: [
 #    port: 443,
