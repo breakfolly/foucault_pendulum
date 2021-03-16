@@ -26,8 +26,6 @@ COPY apps/foucault_pendulum_web/mix.exs apps/foucault_pendulum_web/mix.exs
 
 COPY config config
 RUN mix do deps.get, deps.compile
-#RUN mix deps.get
-#RUN mix deps.compile
 
 # build assets
 COPY apps/foucault_pendulum_web/assets/package.json apps/foucault_pendulum_web/assets/package-lock.json ./apps/foucault_pendulum_web/assets/
