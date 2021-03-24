@@ -26,6 +26,8 @@
     "terser-webpack-plugin": "^2.3.2",
     "webpack": "4.41.5",
     "webpack-cli": "^3.3.2",
-    "elliptic": ">=6.5.4"
+    "elliptic": ">=6.5.4",
+    "ssri": ">=8.0.1",
+    "is-svg": ">=4.2.2"
   }
 }
