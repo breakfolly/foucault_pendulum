@@ -17,6 +17,3 @@ This process made by Phoenix Liveview.
 There are virtual time and x, y coordinator infomation in socket, and the elixir module calculate the pendulum's position using this information.
 Phoenix Liveview can show this calculated results rapidly by using web socket.
 
-## Website
-https://fp.breakfolly.com/ 
-
